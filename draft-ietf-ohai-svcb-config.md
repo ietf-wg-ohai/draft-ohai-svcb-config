@@ -71,8 +71,8 @@ The presence of this parameter indicates that a service can act as a target and
 has a gateway that can provide access to the target.
 
 The client learns the URI to use for the gateway using a well-known
-URI {{!WELLKNOWN=RFC8615}}, "ohttp-gateway", which is accessed on the
-target ({{gateway-location}}). This means that for deployments that
+URI suffix {{!WELLKNOWN=RFC8615}}, "ohttp-gateway", which is accessed on
+the target ({{gateway-location}}). This means that for deployments that
 support this kind of discovery, the gateway and target resources need to
 be located on the same host.
 
@@ -151,7 +151,7 @@ the default "message/bhttp" media type {{OHTTP}}
 {{!BINARY-HTTP=RFC9292}}.
 
 For example, an HTTPS service record for svc.example.com that supports
-a Oblivious HTTP could look like this:
+Oblivious HTTP could look like this:
 
 ~~~
 svc.example.com. 7200  IN HTTPS 1 . ( alpn=h2 ohttp )
@@ -346,7 +346,7 @@ the generic OHTTP key targeting attack described above.
 Clients SHOULD mitigate such attacks. This can be done with a
 check for consistency, such as using a mechanism described in {{CONSISTENCY}}
 to validate the `dohpath` value with another source. It can also be
-done by limiting the the allowable values of `dohpath` to a single
+done by limiting the allowable values of `dohpath` to a single
 value, such as the commonly used "/dns-query{?dns}".
 
 # IANA Considerations {#iana}
