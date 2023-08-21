@@ -64,9 +64,9 @@ want to advertise support for Oblivious HTTP via mechanisms like Discovery of
 Designated Resolvers ({{!DDR=I-D.draft-ietf-add-ddr}}). Clients can access these
 gateways through trusted relays.
 
-This document defines a way to use DNS records to advertise that an HTTP service
-supports Oblivious HTTP. This advertisement is a parameter that can be included in SVCB
-and HTTPS DNS resource records {{!SVCB=I-D.draft-ietf-dnsop-svcb-https}} ({{svc-param}}).
+This document defines a way to use DNS resource records (RRs) to advertise that an HTTP
+service supports Oblivious HTTP. This advertisement is a parameter that can be included in
+SVCB and HTTPS DNS RRs {{!SVCB=I-D.draft-ietf-dnsop-svcb-https}} ({{svc-param}}).
 The presence of this parameter indicates that a service can act as a target and
 has a gateway that can provide access to the target.
 
@@ -115,7 +115,7 @@ are accessible.
 # The ohttp SvcParamKey {#svc-param}
 
 The "ohttp" SvcParamKey ({{iana}}) is used to indicate that a
-service described in an SVCB record can be accessed as a target
+service described in an SVCB RR can be accessed as a target
 using an associated gateway. The service that is queried by the client hosts
 one or more target resources.
 
@@ -130,19 +130,19 @@ MUST be empty.
 Services can include the "ohttp" parameter in the mandatory parameter
 list if the service is only accessible using Oblivious HTTP. Marking
 the "ohttp" parameter as mandatory will cause clients that do not
-understand the parameter to ignore that SVCB record.
+understand the parameter to ignore that SVCB RR.
 Including the "ohttp" parameter without marking it mandatory advertises
 a service that is optionally available using Oblivious HTTP. Note also
-that multiple SVCB records can be provided to indicate separate
+that multiple SVCB RRs can be provided to indicate separate
 configurations.
 
 The media type to use for encapsulated requests made to a target service
-depends on the scheme of the SVCB record. This document defines the
+depends on the scheme of the SVCB RR. This document defines the
 interpretation for the "https" {{SVCB}} and "dns" {{!DNS-SVCB=I-D.draft-ietf-add-svcb-dns}}
 schemes. Other schemes that want to use this parameter MUST define the
 interpretation and meaning of the configuration.
 
-## Use in HTTPS service records
+## Use in HTTPS service RRs
 
 For the "https" scheme, which uses the HTTPS RR type instead of SVCB,
 the presence of the "ohttp" parameter means that the target
@@ -150,21 +150,21 @@ being described is an Oblivious HTTP service that is accessible using
 the default "message/bhttp" media type {{OHTTP}}
 {{!BINARY-HTTP=RFC9292}}.
 
-For example, an HTTPS service record for svc.example.com that supports
+For example, an HTTPS service RR for svc.example.com that supports
 Oblivious HTTP could look like this:
 
 ~~~
 svc.example.com. 7200  IN HTTPS 1 . ( alpn=h2 ohttp )
 ~~~
 
-A similar record for a service that only supports Oblivious HTTP
+A similar RR for a service that only supports Oblivious HTTP
 could look like this:
 
 ~~~
 svc.example.com. 7200  IN HTTPS 1 . ( mandatory=ohttp ohttp )
 ~~~
 
-## Use in DNS server SVCB records
+## Use in DNS server SVCB RRs
 
 For the "dns" scheme, as defined in {{DNS-SVCB}}, the presence of
 the "ohttp" parameter means that the DNS server being
@@ -174,7 +174,7 @@ the gateway using binary HTTP with the default "message/bhttp"
 media type {{BINARY-HTTP}}, containing inner requests that use the
 "application/dns-message" media type {{DOH}}.
 
-If the "ohttp" parameter is included in an DNS server SVCB record,
+If the "ohttp" parameter is included in an DNS server SVCB RR,
 the "alpn" MUST include at least one HTTP value (such as "h2" or
 "h3").
 
@@ -193,7 +193,7 @@ DDR, either by querying _dns.resolver.arpa to a locally configured
 resolver or by querying using the name of a resolver {{DDR}}.
 
 For example, a DoH service advertised over DDR can be annotated
-as supporting resolution via Oblivious HTTP using the following record:
+as supporting resolution via Oblivious HTTP using the following RR:
 
 ~~~
 _dns.resolver.arpa  7200  IN SVCB 1 doh.example.net (
@@ -237,7 +237,7 @@ for more discussion.
 # Gateway Location {#gateway-location}
 
 Once a client has discovered that a service supports Oblivious HTTP
-via the "ohttp" parameter in a SVCB or HTTPS record, it needs to be
+via the "ohttp" parameter in a SVCB or HTTPS RR, it needs to be
 able to send requests via a relay to the correct gateway location.
 
 By default, the gateway for a target is defined as a well-known
