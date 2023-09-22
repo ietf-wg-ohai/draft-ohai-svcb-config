@@ -47,11 +47,11 @@ of the discovered Oblivious Gateway Resource.
 Oblivious HTTP {{!OHTTP=I-D.draft-ietf-ohai-ohttp}} allows clients to encrypt
 messages exchanged with an Oblivious Target Resource (target). The messages
 are encapsulated in encrypted messages to an Oblivious Gateway Resource
-(gateway), which gates access to the target. The gateway is accessed via an
-Oblivious Relay Resource (relay), which proxies the encapsulated messages
-to hide the identity of the client. Overall, this architecture is designed
-in such a way that the relay cannot inspect the contents of messages, and
-the gateway and target cannot learn the client's identity from a single
+(gateway), which offers Oblivious HTTP access to the target. The gateway is
+accessed via an Oblivious Relay Resource (relay), which proxies the encapsulated
+messages to hide the identity of the client. Overall, this architecture is
+designed in such a way that the relay cannot inspect the contents of messages,
+and the gateway and target cannot learn the client's identity from a single
 transaction.
 
 Since Oblivious HTTP deployments typically involve very specific coordination
@@ -114,7 +114,7 @@ are accessible.
 
 # The ohttp SvcParamKey {#svc-param}
 
-The "ohttp" SvcParamKey ({{iana}}) is used to indicate that a
+The "ohttp" SvcParamKey is used to indicate that a
 service described in an SVCB RR can be accessed as a target
 using an associated gateway. The service that is queried by the client hosts
 one or more target resources.
@@ -265,10 +265,18 @@ across oblivious requests for all clients in order to avoid added latency.
 Clients also need to know the key configuration of a gateway before encapsulating
 and sending requests to the relay.
 
+If a client fetches the key configuration directly from the gateway, it
+will expose identifiers like a client IP address to the gateway. The
+privacy and security implications of fetching the key configuration are
+discussed more in {{security}}. Clients can use an HTTP proxy to
+hide their IP addresses when fetching key configurations. Clients can
+also perform consistency checks to validate that they are not receiving
+unique key configurations, as discussed in {{consistency}}.
+
 In order to fetch the key configuration of a gateway discovered
 in the manner described in {{gateway-location}}, the client issues a GET request
-to the URI of the gateway specifying the "application/ohttp-keys" ({{OHTTP}})
-media type in the Accept header.
+(either through a proxy or directly) to the URI of the gateway specifying
+the "application/ohttp-keys" ({{OHTTP}}) media type in the Accept header.
 
 For example, if the client knows an oblivious gateway URI,
 "https://svc.example.com/.well-known/ohttp-gateway", it could fetch the
@@ -285,11 +293,6 @@ support SHOULD support GET requests for their key configuration in this
 manner, unless there is another out-of-band configuration model that is
 usable by clients. Gateways respond with their key configuration in the
 response body, with a content type of "application/ohttp-keys".
-
-Clients can either fetch this key configuration directly, or do so via
-a proxy in order to avoid the server discovering information about the
-client's identity. See {{consistency}} for more discussion of avoiding key
-targeting attacks.
 
 # Security and Privacy Considerations {#security}
 
@@ -354,7 +357,7 @@ value, such as the commonly used "/dns-query{?dns}".
 ## SVCB Service Parameter
 
 This document adds the following entry to the SVCB Service Parameters
-registry ({{SVCB}}).
+registry ({{SVCB}}). The definition of this parameter is in {{svc-param}}.
 
 | Number  | Name           | Meaning                            | Reference       |
 | ------- | -------------- | ---------------------------------- | --------------- |
