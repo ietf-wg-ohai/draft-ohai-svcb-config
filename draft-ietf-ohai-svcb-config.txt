@@ -5,8 +5,8 @@
 Oblivious HTTP Application Intermediation                       T. Pauly
 Internet-Draft                                                Apple Inc.
 Intended status: Standards Track                                T. Reddy
-Expires: 23 February 2024                                          Nokia
-                                                          22 August 2023
+Expires: 25 March 2024                                             Nokia
+                                                       22 September 2023
 
 
       Discovery of Oblivious Services via Service Binding Records
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 February 2024.
+   This Internet-Draft will expire on 25 March 2024.
 
 Copyright Notice
 
@@ -96,12 +96,12 @@ Table of Contents
    Oblivious HTTP [OHTTP] allows clients to encrypt messages exchanged
    with an Oblivious Target Resource (target).  The messages are
    encapsulated in encrypted messages to an Oblivious Gateway Resource
-   (gateway), which gates access to the target.  The gateway is accessed
-   via an Oblivious Relay Resource (relay), which proxies the
-   encapsulated messages to hide the identity of the client.  Overall,
-   this architecture is designed in such a way that the relay cannot
-   inspect the contents of messages, and the gateway and target cannot
-   learn the client's identity from a single transaction.
+   (gateway), which offers Oblivious HTTP access to the target.  The
+   gateway is accessed via an Oblivious Relay Resource (relay), which
+   proxies the encapsulated messages to hide the identity of the client.
+   Overall, this architecture is designed in such a way that the relay
+   cannot inspect the contents of messages, and the gateway and target
+   cannot learn the client's identity from a single transaction.
 
    Since Oblivious HTTP deployments typically involve very specific
    coordination between clients, relays, and gateways, the key
@@ -169,10 +169,10 @@ Table of Contents
 
 4.  The ohttp SvcParamKey
 
-   The "ohttp" SvcParamKey (Section 8) is used to indicate that a
-   service described in an SVCB RR can be accessed as a target using an
-   associated gateway.  The service that is queried by the client hosts
-   one or more target resources.
+   The "ohttp" SvcParamKey is used to indicate that a service described
+   in an SVCB RR can be accessed as a target using an associated
+   gateway.  The service that is queried by the client hosts one or more
+   target resources.
 
    In order to access the service's target resources using Oblivious
    HTTP, the client needs to send encapsulated messages to the gateway
@@ -316,10 +316,20 @@ Table of Contents
    Clients also need to know the key configuration of a gateway before
    encapsulating and sending requests to the relay.
 
+   If a client fetches the key configuration directly from the gateway,
+   it will expose identifiers like a client IP address to the gateway.
+   The privacy and security implications of fetching the key
+   configuration are discussed more in Section 7.  Clients can use an
+   HTTP proxy to hide their IP addresses when fetching key
+   configurations.  Clients can also perform consistency checks to
+   validate that they are not receiving unique key configurations, as
+   discussed in Section 7.1.
+
    In order to fetch the key configuration of a gateway discovered in
-   the manner described in Section 5, the client issues a GET request to
-   the URI of the gateway specifying the "application/ohttp-keys"
-   ([OHTTP]) media type in the Accept header.
+   the manner described in Section 5, the client issues a GET request
+   (either through a proxy or directly) to the URI of the gateway
+   specifying the "application/ohttp-keys" ([OHTTP]) media type in the
+   Accept header.
 
    For example, if the client knows an oblivious gateway URI,
    "https://svc.example.com/.well-known/ohttp-gateway", it could fetch
@@ -335,11 +345,6 @@ Table of Contents
    that is usable by clients.  Gateways respond with their key
    configuration in the response body, with a content type of
    "application/ohttp-keys".
-
-   Clients can either fetch this key configuration directly, or do so
-   via a proxy in order to avoid the server discovering information
-   about the client's identity.  See Section 7.1 for more discussion of
-   avoiding key targeting attacks.
 
 7.  Security and Privacy Considerations
 
@@ -406,7 +411,7 @@ Table of Contents
 8.1.  SVCB Service Parameter
 
    This document adds the following entry to the SVCB Service Parameters
-   registry ([SVCB]).
+   registry ([SVCB]).  The definition of this parameter is in Section 4.
 
    +=============+=======+=================================+===========+
    | Number      | Name  | Meaning                         | Reference |
@@ -471,9 +476,9 @@ Table of Contents
               <https://www.rfc-editor.org/rfc/rfc9110>.
 
    [OHTTP]    Thomson, M. and C. A. Wood, "Oblivious HTTP", Work in
-              Progress, Internet-Draft, draft-ietf-ohai-ohttp-09, 27
-              July 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-ohai-ohttp-09>.
+              Progress, Internet-Draft, draft-ietf-ohai-ohttp-10, 25
+              August 2023, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-ohai-ohttp-10>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,

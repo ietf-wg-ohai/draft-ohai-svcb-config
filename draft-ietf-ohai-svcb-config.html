@@ -19,7 +19,7 @@ of the discovered Oblivious Gateway Resource.
 <meta content="draft-ietf-ohai-svcb-config-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.18.0
-    Python 3.11.4
+    Python 3.11.5
     ConfigArgParse 1.5.3
     google-i18n-address 3.1.0
     intervaltree 3.1.0
@@ -654,7 +654,7 @@ sub, sup {
 }
 #toc nav li {
   line-height: 1.3em;
-  margin: 0.75em 0;
+  margin: 2px 0;
   padding-left: 1.2em;
   text-indent: -1.2em;
 }
@@ -747,7 +747,7 @@ hr.addr {
     z-index: 2;
     top: 0;
     right: 0;
-    padding: 0;
+    padding: 1px 0 0 0;
     margin: 0;
     border-bottom: 1px solid #ccc;
     opacity: 0.6;
@@ -871,16 +871,13 @@ hr.addr {
     border-top: none;
     padding-top: 0;
   }
-  figure, pre {
+  figure, pre, .vcard {
     page-break-inside: avoid;
-  }
-  figure {
-    overflow: scroll;
   }
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
-  h2+*, h3+*, h4+*, h5+*, h6+* {
+  :is(h2, h3, h4, h5, h6)+*, dd {
     page-break-before: avoid;
   }
   pre {
@@ -893,6 +890,9 @@ hr.addr {
   }
   td {
     border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
   }
 }
 
@@ -994,28 +994,6 @@ address div.right {
   text-align: right;
 }
 
-/* Give the table caption label the same styling as the figcaption */
-
-@media print {
-  .toplink {
-    display: none;
-  }
-
-  /* avoid overwriting the top border line with the ToC header */
-  #toc {
-    padding-top: 1px;
-  }
-
-  /* Avoid page breaks inside dl and author address entries */
-  dd {
-    page-break-before: avoid;
-  }
-  .vcard {
-    page-break-inside: avoid;
-  }
-
-}
-
 /* Dark mode. */
 @media (prefers-color-scheme: dark) {
 :root {
@@ -1052,11 +1030,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Oblivious Services in SVCB</td>
-<td class="right">August 2023</td>
+<td class="right">September 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Pauly &amp; Reddy</td>
-<td class="center">Expires 23 February 2024</td>
+<td class="center">Expires 25 March 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1069,12 +1047,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-ohai-svcb-config-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-08-22" class="published">22 August 2023</time>
+<time datetime="2023-09-22" class="published">22 September 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-02-23">23 February 2024</time></dd>
+<dd class="expires"><time datetime="2024-03-25">25 March 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1131,7 +1109,7 @@ of the discovered Oblivious Gateway Resource.<a href="#section-abstract-1" class
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 23 February 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 25 March 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1242,11 +1220,11 @@ of the discovered Oblivious Gateway Resource.<a href="#section-abstract-1" class
 <p id="section-1-1">Oblivious HTTP <span>[<a href="#OHTTP" class="cite xref">OHTTP</a>]</span> allows clients to encrypt
 messages exchanged with an Oblivious Target Resource (target). The messages
 are encapsulated in encrypted messages to an Oblivious Gateway Resource
-(gateway), which gates access to the target. The gateway is accessed via an
-Oblivious Relay Resource (relay), which proxies the encapsulated messages
-to hide the identity of the client. Overall, this architecture is designed
-in such a way that the relay cannot inspect the contents of messages, and
-the gateway and target cannot learn the client's identity from a single
+(gateway), which offers Oblivious HTTP access to the target. The gateway is
+accessed via an Oblivious Relay Resource (relay), which proxies the encapsulated
+messages to hide the identity of the client. Overall, this architecture is
+designed in such a way that the relay cannot inspect the contents of messages,
+and the gateway and target cannot learn the client's identity from a single
 transaction.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Since Oblivious HTTP deployments typically involve very specific coordination
 between clients, relays, and gateways, the key configuration is often shared
@@ -1320,7 +1298,7 @@ are accessible.<a href="#section-3-3" class="pilcrow">¶</a></p>
       <h2 id="name-the-ohttp-svcparamkey">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-the-ohttp-svcparamkey" class="section-name selfRef">The ohttp SvcParamKey</a>
       </h2>
-<p id="section-4-1">The "ohttp" SvcParamKey (<a href="#iana" class="auto internal xref">Section 8</a>) is used to indicate that a
+<p id="section-4-1">The "ohttp" SvcParamKey is used to indicate that a
 service described in an SVCB RR can be accessed as a target
 using an associated gateway. The service that is queried by the client hosts
 one or more target resources.<a href="#section-4-1" class="pilcrow">¶</a></p>
@@ -1481,29 +1459,32 @@ across oblivious requests for all clients in order to avoid added latency.<a hre
       </h2>
 <p id="section-6-1">Clients also need to know the key configuration of a gateway before encapsulating
 and sending requests to the relay.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">In order to fetch the key configuration of a gateway discovered
+<p id="section-6-2">If a client fetches the key configuration directly from the gateway, it
+will expose identifiers like a client IP address to the gateway. The
+privacy and security implications of fetching the key configuration are
+discussed more in <a href="#security" class="auto internal xref">Section 7</a>. Clients can use an HTTP proxy to
+hide their IP addresses when fetching key configurations. Clients can
+also perform consistency checks to validate that they are not receiving
+unique key configurations, as discussed in <a href="#consistency" class="auto internal xref">Section 7.1</a>.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">In order to fetch the key configuration of a gateway discovered
 in the manner described in <a href="#gateway-location" class="auto internal xref">Section 5</a>, the client issues a GET request
-to the URI of the gateway specifying the "application/ohttp-keys" (<span>[<a href="#OHTTP" class="cite xref">OHTTP</a>]</span>)
-media type in the Accept header.<a href="#section-6-2" class="pilcrow">¶</a></p>
-<p id="section-6-3">For example, if the client knows an oblivious gateway URI,
+(either through a proxy or directly) to the URI of the gateway specifying
+the "application/ohttp-keys" (<span>[<a href="#OHTTP" class="cite xref">OHTTP</a>]</span>) media type in the Accept header.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4">For example, if the client knows an oblivious gateway URI,
 "https://svc.example.com/.well-known/ohttp-gateway", it could fetch the
-key configuration with the following request:<a href="#section-6-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6-4">
+key configuration with the following request:<a href="#section-6-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6-5">
 <pre>
 GET /.well-known/ohttp-gateway HTTP/1.1
 Host: svc.example.com
 Accept: application/ohttp-keys
-</pre><a href="#section-6-4" class="pilcrow">¶</a>
+</pre><a href="#section-6-5" class="pilcrow">¶</a>
 </div>
-<p id="section-6-5">Gateways that coordinate with targets that advertise Oblivious HTTP
+<p id="section-6-6">Gateways that coordinate with targets that advertise Oblivious HTTP
 support <span class="bcp14">SHOULD</span> support GET requests for their key configuration in this
 manner, unless there is another out-of-band configuration model that is
 usable by clients. Gateways respond with their key configuration in the
-response body, with a content type of "application/ohttp-keys".<a href="#section-6-5" class="pilcrow">¶</a></p>
-<p id="section-6-6">Clients can either fetch this key configuration directly, or do so via
-a proxy in order to avoid the server discovering information about the
-client's identity. See <a href="#consistency" class="auto internal xref">Section 7.1</a> for more discussion of avoiding key
-targeting attacks.<a href="#section-6-6" class="pilcrow">¶</a></p>
+response body, with a content type of "application/ohttp-keys".<a href="#section-6-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security">
@@ -1583,7 +1564,7 @@ value, such as the commonly used "/dns-query{?dns}".<a href="#section-7.2-2" cla
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-svcb-service-parameter" class="section-name selfRef">SVCB Service Parameter</a>
         </h3>
 <p id="section-8.1-1">This document adds the following entry to the SVCB Service Parameters
-registry (<span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>).<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+registry (<span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>). The definition of this parameter is in <a href="#svc-param" class="auto internal xref">Section 4</a>.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <table class="center" id="table-1">
           <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
 <thead>
@@ -1655,7 +1636,7 @@ registry (<span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>).<a href="#s
 <dd class="break"></dd>
 <dt id="OHTTP">[OHTTP]</dt>
         <dd>
-<span class="refAuthor">Thomson, M.</span> and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Oblivious HTTP"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ohai-ohttp-09</span>, <time datetime="2023-07-27" class="refDate">27 July 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-ohai-ohttp-09">https://datatracker.ietf.org/doc/html/draft-ietf-ohai-ohttp-09</a>&gt;</span>. </dd>
+<span class="refAuthor">Thomson, M.</span> and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Oblivious HTTP"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ohai-ohttp-10</span>, <time datetime="2023-08-25" class="refDate">25 August 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-ohai-ohttp-10">https://datatracker.ietf.org/doc/html/draft-ietf-ohai-ohttp-10</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
