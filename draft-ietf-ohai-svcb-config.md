@@ -214,7 +214,7 @@ SHOULD NOT be used in general with Oblivious HTTP, since this mode
 primarily exists to support resolvers that use private or local IP
 addresses, which will usually not be accessible when using a
 relay. If a configuration occurs where the resolver is accessible, but
-cannot use certificate-based validation, the client needs to ensure
+cannot use certificate-based validation, the client MUST ensure
 that the relay only accesses the gateway and target using
 the unencrypted resolver's original IP address.
 
@@ -346,11 +346,14 @@ For oblivious DoH servers, an attacker could use unique `dohpath` values
 to target or identify specific clients. This attack is very similar to
 the generic OHTTP key targeting attack described above.
 
-Clients SHOULD mitigate such attacks. This can be done with a
-check for consistency, such as using a mechanism described in {{CONSISTENCY}}
-to validate the `dohpath` value with another source. It can also be
-done by limiting the allowable values of `dohpath` to a single
-value, such as the commonly used "/dns-query{?dns}".
+A client can avoid these targeting attacks by only allowing a single
+`dohpath` value, such as the commonly used "/dns-query{?dns}" or
+another pre-known value. If the client allows arbitrary `dohpath`
+values, it SHOULD mitigate the attack with a consistency check,
+such as using a mechanism described in {{CONSISTENCY}} to validate the
+`dohpath` value with another source. Clients might choose to only
+employ a consistency check on a percentage of discovery events,
+depending on the capacity of consistency check options.
 
 # IANA Considerations {#iana}
 
