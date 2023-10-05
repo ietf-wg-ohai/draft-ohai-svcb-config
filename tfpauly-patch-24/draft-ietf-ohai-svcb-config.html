@@ -1549,11 +1549,12 @@ the generic OHTTP key targeting attack described above.<a href="#section-7.2-1" 
 <p id="section-7.2-2">A client can avoid these targeting attacks by only allowing a single
 <code>dohpath</code> value, such as the commonly used "/dns-query{?dns}" or
 another pre-known value. If the client allows arbitrary <code>dohpath</code>
-values, it <span class="bcp14">SHOULD</span> mitigate the attack with a consistency check,
+values, it <span class="bcp14">SHOULD</span> mitigate targeting attacks with a consistency check,
 such as using a mechanism described in <span>[<a href="#CONSISTENCY" class="cite xref">CONSISTENCY</a>]</span> to validate the
 <code>dohpath</code> value with another source. Clients might choose to only
 employ a consistency check on a percentage of discovery events,
-depending on the capacity of consistency check options.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
+depending on the capacity of consistency check options and their
+deployment threat model.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
