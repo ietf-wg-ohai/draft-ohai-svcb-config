@@ -61,7 +61,7 @@ discovering targets and their associated gateways more dynamically.
 For example, a network might operate a DNS resolver that provides more optimized
 or more relevant DNS answers and is accessible using Oblivious HTTP, and might
 want to advertise support for Oblivious HTTP via mechanisms like Discovery of
-Designated Resolvers ({{!DDR=I-D.draft-ietf-add-ddr}}) and 
+Designated Resolvers ({{!DDR=I-D.draft-ietf-add-ddr}}) and
 Discovery of Network-designated Resolvers ({{!DNR=I-D.draft-ietf-add-dnr}}).
 Clients can access these gateways through trusted relays.
 
