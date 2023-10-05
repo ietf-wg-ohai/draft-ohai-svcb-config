@@ -349,11 +349,12 @@ the generic OHTTP key targeting attack described above.
 A client can avoid these targeting attacks by only allowing a single
 `dohpath` value, such as the commonly used "/dns-query{?dns}" or
 another pre-known value. If the client allows arbitrary `dohpath`
-values, it SHOULD mitigate the attack with a consistency check,
+values, it SHOULD mitigate targeting attacks with a consistency check,
 such as using a mechanism described in {{CONSISTENCY}} to validate the
 `dohpath` value with another source. Clients might choose to only
 employ a consistency check on a percentage of discovery events,
-depending on the capacity of consistency check options.
+depending on the capacity of consistency check options and their
+deployment threat model.
 
 # IANA Considerations {#iana}
 
