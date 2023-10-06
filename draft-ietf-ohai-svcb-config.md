@@ -61,8 +61,9 @@ discovering targets and their associated gateways more dynamically.
 For example, a network might operate a DNS resolver that provides more optimized
 or more relevant DNS answers and is accessible using Oblivious HTTP, and might
 want to advertise support for Oblivious HTTP via mechanisms like Discovery of
-Designated Resolvers ({{!DDR=I-D.draft-ietf-add-ddr}}). Clients can access these
-gateways through trusted relays.
+Designated Resolvers ({{!DDR=I-D.draft-ietf-add-ddr}}) and
+Discovery of Network-designated Resolvers ({{!DNR=I-D.draft-ietf-add-dnr}}).
+Clients can access these gateways through trusted relays.
 
 This document defines a way to use DNS resource records (RRs) to advertise that an HTTP
 service supports Oblivious HTTP. This advertisement is a parameter that can be included in
@@ -97,7 +98,8 @@ the client intends to communicate with a specific target service, and
 prefers to use Oblivious HTTP if it is available. The target service
 has a gateway that it offers to allow access using Oblivious
 HTTP. Once the client learns about the gateway, it "upgrades"
-to using Oblivious HTTP to access the target service.
+its requests from non-proxied HTTP to Oblivious HTTP to access
+the target service.
 
 - Discovering alternative Oblivious HTTP services. In this model,
 the client has a default target service that it uses. For
@@ -225,7 +227,7 @@ being targeted with unique DoH paths that would reveal their identity. See
 ### Use with DNR {#dnr}
 
 The SvcParamKeys defined in this document also can be used with Discovery
-of Network-designated Resolvers (DNR) {{!DNR=I-D.draft-ietf-add-dnr}}. In this
+of Network-designated Resolvers (DNR) {{DNR}}. In this
 case, the oblivious configuration and path parameters can be included
 in DHCP and Router Advertisement messages.
 
@@ -240,8 +242,9 @@ Once a client has discovered that a service supports Oblivious HTTP
 via the "ohttp" parameter in a SVCB or HTTPS RR, it needs to be
 able to send requests via a relay to the correct gateway location.
 
-By default, the gateway for a target is defined as a well-known
-resource ({{WELLKNOWN}}) on the target, "/.well-known/ohttp-gateway".
+This document defines a well-known resource ({{WELLKNOWN}}),
+"/.well-known/ohttp-gateway", which is an Oblivious Gateway Resource
+available on the same host as the target resource.
 
 Some servers might not want to operate the gateway on a well-known URI.
 In such cases, these servers can use 3xx redirection responses
