@@ -5,8 +5,8 @@
 Oblivious HTTP Application Intermediation                       T. Pauly
 Internet-Draft                                                Apple Inc.
 Intended status: Standards Track                                T. Reddy
-Expires: 25 March 2024                                             Nokia
-                                                       22 September 2023
+Expires: 8 April 2024                                              Nokia
+                                                          6 October 2023
 
 
       Discovery of Oblivious Services via Service Binding Records
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 March 2024.
+   This Internet-Draft will expire on 8 April 2024.
 
 Copyright Notice
 
@@ -111,8 +111,9 @@ Table of Contents
    DNS resolver that provides more optimized or more relevant DNS
    answers and is accessible using Oblivious HTTP, and might want to
    advertise support for Oblivious HTTP via mechanisms like Discovery of
-   Designated Resolvers ([DDR]).  Clients can access these gateways
-   through trusted relays.
+   Designated Resolvers ([DDR]) and Discovery of Network-designated
+   Resolvers ([DNR]).  Clients can access these gateways through trusted
+   relays.
 
    This document defines a way to use DNS resource records (RRs) to
    advertise that an HTTP service supports Oblivious HTTP.  This
@@ -152,8 +153,8 @@ Table of Contents
       service, and prefers to use Oblivious HTTP if it is available.
       The target service has a gateway that it offers to allow access
       using Oblivious HTTP.  Once the client learns about the gateway,
-      it "upgrades" to using Oblivious HTTP to access the target
-      service.
+      it "upgrades" its requests from non-proxied HTTP to Oblivious HTTP
+      to access the target service.
 
    *  Discovering alternative Oblivious HTTP services.  In this model,
       the client has a default target service that it uses.  For
@@ -290,8 +291,9 @@ Table of Contents
    via the "ohttp" parameter in a SVCB or HTTPS RR, it needs to be able
    to send requests via a relay to the correct gateway location.
 
-   By default, the gateway for a target is defined as a well-known
-   resource ([WELLKNOWN]) on the target, "/.well-known/ohttp-gateway".
+   This document defines a well-known resource ([WELLKNOWN]), "/.well-
+   known/ohttp-gateway", which is an Oblivious Gateway Resource
+   available on the same host as the target resource.
 
    Some servers might not want to operate the gateway on a well-known
    URI.  In such cases, these servers can use 3xx redirection responses

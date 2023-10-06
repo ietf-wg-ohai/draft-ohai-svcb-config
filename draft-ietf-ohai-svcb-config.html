@@ -14,24 +14,24 @@ HTTP, by offering an Oblivious Gateway Resource through which to access the
 target. This document also defines a mechanism to learn the key configuration
 of the discovered Oblivious Gateway Resource. 
     " name="description">
-<meta content="xml2rfc 3.18.0" name="generator">
+<meta content="xml2rfc 3.18.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-ohai-svcb-config-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.18.0
+  xml2rfc 3.18.1
     Python 3.11.5
     ConfigArgParse 1.5.3
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.10.0
+    platformdirs 3.11.0
     pycountry 22.3.5
     PyYAML 6.0
     requests 2.31.0
     setuptools 67.7.2
     six 1.16.0
-    wcwidth 0.2.6
+    wcwidth 0.2.8
 -->
 <link href="draft-ietf-ohai-svcb-config.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1030,11 +1030,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Oblivious Services in SVCB</td>
-<td class="right">September 2023</td>
+<td class="right">October 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Pauly &amp; Reddy</td>
-<td class="center">Expires 25 March 2024</td>
+<td class="center">Expires 8 April 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1047,12 +1047,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-ohai-svcb-config-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-09-22" class="published">22 September 2023</time>
+<time datetime="2023-10-06" class="published">6 October 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-03-25">25 March 2024</time></dd>
+<dd class="expires"><time datetime="2024-04-08">8 April 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1109,7 +1109,7 @@ of the discovered Oblivious Gateway Resource.<a href="#section-abstract-1" class
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 25 March 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 April 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1233,8 +1233,9 @@ discovering targets and their associated gateways more dynamically.
 For example, a network might operate a DNS resolver that provides more optimized
 or more relevant DNS answers and is accessible using Oblivious HTTP, and might
 want to advertise support for Oblivious HTTP via mechanisms like Discovery of
-Designated Resolvers (<span>[<a href="#DDR" class="cite xref">DDR</a>]</span>). Clients can access these
-gateways through trusted relays.<a href="#section-1-2" class="pilcrow">¶</a></p>
+Designated Resolvers (<span>[<a href="#DDR" class="cite xref">DDR</a>]</span>) and
+Discovery of Network-designated Resolvers (<span>[<a href="#DNR" class="cite xref">DNR</a>]</span>).
+Clients can access these gateways through trusted relays.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">This document defines a way to use DNS resource records (RRs) to advertise that an HTTP
 service supports Oblivious HTTP. This advertisement is a parameter that can be included in
 SVCB and HTTPS DNS RRs <span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span> (<a href="#svc-param" class="auto internal xref">Section 4</a>).
@@ -1271,19 +1272,22 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-3-1">There are multiple models in which the discovery mechanism defined
 in this document can be used.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3-2.1">Upgrading regular (non-proxied) HTTP to Oblivious HTTP. In this model,
+<li class="normal" id="section-3-2.1">
+          <p id="section-3-2.1.1">Upgrading regular (non-proxied) HTTP to Oblivious HTTP. In this model,
 the client intends to communicate with a specific target service, and
 prefers to use Oblivious HTTP if it is available. The target service
 has a gateway that it offers to allow access using Oblivious
 HTTP. Once the client learns about the gateway, it "upgrades"
-to using Oblivious HTTP to access the target service.<a href="#section-3-2.1" class="pilcrow">¶</a>
+its requests from non-proxied HTTP to Oblivious HTTP to access
+the target service.<a href="#section-3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-3-2.2">Discovering alternative Oblivious HTTP services. In this model,
+        <li class="normal" id="section-3-2.2">
+          <p id="section-3-2.2.1">Discovering alternative Oblivious HTTP services. In this model,
 the client has a default target service that it uses. For
 example, this may be a public DNS resolver that is accessible over
 Oblivious HTTP. The client is willing to use alternative
 target services if they are discovered, which may provide more
-optimized or more relevant responses.<a href="#section-3-2.2" class="pilcrow">¶</a>
+optimized or more relevant responses.<a href="#section-3-2.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-3-3">In both deployment models, the client is configured with
@@ -1433,8 +1437,9 @@ for more discussion.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-5-1">Once a client has discovered that a service supports Oblivious HTTP
 via the "ohttp" parameter in a SVCB or HTTPS RR, it needs to be
 able to send requests via a relay to the correct gateway location.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">By default, the gateway for a target is defined as a well-known
-resource (<span>[<a href="#WELLKNOWN" class="cite xref">WELLKNOWN</a>]</span>) on the target, "/.well-known/ohttp-gateway".<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-2">This document defines a well-known resource (<span>[<a href="#WELLKNOWN" class="cite xref">WELLKNOWN</a>]</span>),
+"/.well-known/ohttp-gateway", which is an Oblivious Gateway Resource
+available on the same host as the target resource.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">Some servers might not want to operate the gateway on a well-known URI.
 In such cases, these servers can use 3xx redirection responses
 (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.4" class="relref">Section 15.4</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) to direct clients and relays to the correct
@@ -1605,6 +1610,7 @@ registry (<span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>). The defini
       <h2 id="name-references">
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
 <section id="section-9.1">
         <h3 id="name-normative-references">
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
@@ -1656,6 +1662,8 @@ registry (<span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>). The defini
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
+<div id="sec-informative-references">
 <section id="section-9.2">
         <h3 id="name-informative-references">
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
@@ -1671,6 +1679,7 @@ registry (<span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>). The defini
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
 </section>
 <div id="authors-addresses">
 <section id="appendix-A">
