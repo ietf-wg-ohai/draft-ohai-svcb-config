@@ -1402,7 +1402,7 @@ or via the relay or another proxy to avoid exposing client IP addresses.<a href=
 primarily exists to support resolvers that use private or local IP
 addresses, which will usually not be accessible when using a
 relay. If a configuration occurs where the resolver is accessible, but
-cannot use certificate-based validation, the client needs to ensure
+cannot use certificate-based validation, the client <span class="bcp14">MUST</span> ensure
 that the relay only accesses the gateway and target using
 the unencrypted resolver's original IP address.<a href="#section-4.2.1-5" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-6">For the case of DoH recursive resolvers, clients also need to ensure that they are not
@@ -1549,11 +1549,15 @@ clients avoid using this gateway in the future.<a href="#section-7.1-2" class="p
 <p id="section-7.2-1">For oblivious DoH servers, an attacker could use unique <code>dohpath</code> values
 to target or identify specific clients. This attack is very similar to
 the generic OHTTP key targeting attack described above.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
-<p id="section-7.2-2">Clients <span class="bcp14">SHOULD</span> mitigate such attacks. This can be done with a
-check for consistency, such as using a mechanism described in <span>[<a href="#CONSISTENCY" class="cite xref">CONSISTENCY</a>]</span>
-to validate the <code>dohpath</code> value with another source. It can also be
-done by limiting the allowable values of <code>dohpath</code> to a single
-value, such as the commonly used "/dns-query{?dns}".<a href="#section-7.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.2-2">A client can avoid these targeting attacks by only allowing a single
+<code>dohpath</code> value, such as the commonly used "/dns-query{?dns}" or
+another pre-known value. If the client allows arbitrary <code>dohpath</code>
+values, it <span class="bcp14">SHOULD</span> mitigate targeting attacks with a consistency check,
+such as using a mechanism described in <span>[<a href="#CONSISTENCY" class="cite xref">CONSISTENCY</a>]</span> to validate the
+<code>dohpath</code> value with another source. Clients might choose to only
+employ a consistency check on a percentage of discovery events,
+depending on the capacity of consistency check options and their
+deployment threat model.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
