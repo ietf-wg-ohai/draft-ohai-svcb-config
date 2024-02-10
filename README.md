@@ -1,6 +1,6 @@
 # Distribution of Oblivious Configurations via Service Binding Records
 
-This is the working area for the individual Internet-Draft, "Distribution of Oblivious Configurations via Service Binding Records".
+This is the working area for the OHAI Working Group Internet-Draft, "Distribution of Oblivious Configurations via Service Binding Records".
 
 * [Editor's Copy](https://ietf-wg-ohai.github.io/draft-ohai-svcb-config/#go.draft-ietf-ohai-svcb-config.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-ohai-svcb-config)
